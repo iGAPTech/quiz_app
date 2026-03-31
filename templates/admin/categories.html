@@ -1,0 +1,154 @@
+{% include "admin/header.html" %}
+
+<div class="page-wrapper">
+
+    <div class="container-fluid">
+
+        <!-- Page Title -->
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h4 class="card-title">Categories</h4>
+                    </div>
+                    <div class="col-lg-4 text-right">
+                        <button class="btn btn-primary mb-3"
+                                data-toggle="modal"
+                                data-target="#addCategoryModal">
+                            + Add Category
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Categories Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-dark">
+
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>ID</th>
+                                <th>Category Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for cat in categories %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ cat.name }}</td>
+                                <td>
+                                    {% if cat.status == 'active' %}
+                                        <span class="badge badge-success">Active</span>
+                                    {% else %}
+                                        <span class="badge badge-secondary">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Edit Button -->
+                                    <button class="btn btn-sm btn-warning"
+                                            data-toggle="modal"
+                                            data-target="#editModal{{ cat.id }}">
+                                        Edit
+                                    </button>
+
+                                    <!-- Delete -->
+                                    <a href="/admin/categories/delete/{{ cat.id }}"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Delete this category?')">
+                                       Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ================= ADD CATEGORY MODAL ================= -->
+<div class="modal fade" id="addCategoryModal">
+    <div class="modal-dialog">
+        <form method="post" action="/admin/categories/add">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5>Add Category</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="text"
+                           name="name"
+                           class="form-control mb-2"
+                           placeholder="Category Name"
+                           required>
+
+                    <select name="status" class="form-control">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-success">Save</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- ================= EDIT CATEGORY MODALS ================= -->
+{% for cat in categories %}
+<div class="modal fade" id="editModal{{ cat.id }}">
+    <div class="modal-dialog">
+        <form method="post" action="/admin/categories/update/{{ cat.id }}">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5>Edit Category</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="text"
+                           name="name"
+                           class="form-control mb-2"
+                           value="{{ cat.name }}"
+                           required>
+
+                    <select name="status" class="form-control">
+                        <option value="active"
+                            {% if cat.status == 'active' %}selected{% endif %}>
+                            Active
+                        </option>
+                        <option value="inactive"
+                            {% if cat.status == 'inactive' %}selected{% endif %}>
+                            Inactive
+                        </option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Update</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endfor %}
+
+
+{% include "admin/footer.html" %}

@@ -1,0 +1,57 @@
+{% include "user/header.html" %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Available Quizzes</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>ID</th>
+                                <th>Category</th>
+                                <th>Quiz Title</th>
+                                <th>Time Limit</th>
+                                <th>Total Marks</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for quiz in quizzes %}
+                            <tr>
+                                <td>{{ quiz.id }}</td>
+                                <td>{{ quiz.category_name }}</td>
+                                <td>{{ quiz.title }}</td>
+                                <td>{{ quiz.time_limit }} mins</td>
+                                <td>{{ quiz.total_marks }}</td>
+                                <td>
+                                    <a href="/user/start-quiz/{{ quiz.id }}"
+                                       class="btn btn-sm btn-success">
+                                        Start
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    No quizzes available
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include "user/footer.html" %}

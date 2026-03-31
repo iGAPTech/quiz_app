@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <title>Interactive Quiz App- Verify OTP</title>
+    <!-- Custom CSS -->
+    <link href="../../dist/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/assets/dist/css/style.min.css">
+
+    <style>
+        .bg-img{
+            background-image: url('../../static/assets/bg.jpg');
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper bg-img">
+        
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center rounded">
+            <div class="auth-box">
+                <div id="loginform">
+                    <div class="logo">
+                        <span class="db">
+                            <img src="../../static/assets/icon.png" style="height: 90px;" alt="logo">
+                        </span>
+                        <h5 class="font-medium m-b-20">Verify OTP</h5>
+                    </div>
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-12">
+                                 <!-- Flash Messages -->
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for category, msg in messages %}
+                                        <div class="alert alert-{{ category }}">{{ msg }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+
+                                <form method="POST">
+                                    <input type="text" name="otp" class="form-control mb-3" placeholder="Enter OTP" required>
+                                    <button class="btn btn-success w-100">Verify</button>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="../../static/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../../static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../../static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    
+    
+</body>
+
+</html>

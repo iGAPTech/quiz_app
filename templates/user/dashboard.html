@@ -1,0 +1,46 @@
+{% include "user/header.html" %}
+
+<style>
+        .bg-img{
+            background-image: url('../../static/assets/bg1.jpg');
+            background-size: cover;
+        }
+    </style>
+
+<div class="page-wrapper ">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h4>Welcome, {{ name }}</h4>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <!-- Total Quizzes -->
+            <div class="col-md-6">
+                <div class="card text-center bg-info text-white">
+                    <div class="card-body">
+                        <h3>{{ total_quizzes }}</h3>
+                        <p>Available Quizzes</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Attempts -->
+            <div class="col-md-6">
+                <div class="card text-center bg-danger text-white">
+                    <div class="card-body">
+                        <h3>{{ total_attempts }}</h3>
+                        <p>My Attempts</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% include "user/footer.html" %}

@@ -1,0 +1,58 @@
+{% include "user/header.html" %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h4>{{ quiz.title }}</h4>
+                <p>Time Limit: {{ quiz.time_limit }} minutes</p>
+
+                <!-- Timer -->
+                <h5 class="text-danger">Time Left: <span id="timer"></span></h5>
+
+                <form method="POST" action="/user/submit-quiz/{{ quiz.id }}" id="quizForm">
+
+                    {% for q in questions %}
+                    <div class="mb-3">
+                        <p><b>Q{{ loop.index }}. {{ q.question_text }}</b></p>
+
+                        <input type="radio" name="{{ q.id }}" value="A"> {{ q.option_a }}<br>
+                        <input type="radio" name="{{ q.id }}" value="B"> {{ q.option_b }}<br>
+                        <input type="radio" name="{{ q.id }}" value="C"> {{ q.option_c }}<br>
+                        <input type="radio" name="{{ q.id }}" value="D"> {{ q.option_d }}<br>
+                    </div>
+                    <hr>
+                    {% endfor %}
+
+                    <button class="btn btn-success">Submit Quiz</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+var timeLeft = {{ quiz.time_limit }} * 60;
+var timer = document.getElementById("timer");
+
+var countdown = setInterval(function(){
+    var minutes = Math.floor(timeLeft / 60);
+    var seconds = timeLeft % 60;
+
+    timer.innerHTML = minutes + "m " + seconds + "s";
+
+    timeLeft--;
+
+    if(timeLeft < 0){
+        clearInterval(countdown);
+        alert("Time is up! Quiz will be submitted.");
+        document.getElementById("quizForm").submit();
+    }
+}, 1000);
+</script>
+
+{% include "user/footer.html" %}

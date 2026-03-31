@@ -1,0 +1,159 @@
+{% include "admin/header.html" %}
+
+<div class="page-wrapper">
+
+    <!-- Breadcrumb -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-6">
+                <h4 class="page-title">Admin Dashboard</h4>
+            </div>
+            <div class="col-6 text-right">
+                <span class="text-muted">Welcome, Admin</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <!-- ================== STAT CARDS ================== -->
+        <div class="row">
+
+            <!-- Students -->
+            <div class="col-md-3">
+                <div class="card text-center bg-info text-white rounded">
+                    <div class="card-body">
+                        <i class="mdi mdi-account-multiple font-60 text-white" style="font-size: 30px;"></i>
+                        <h2 class="mt-2">{{ total_students }}</h2>
+                        <h3 class="text-white">Total Students</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quizzes -->
+            <div class="col-md-3">
+                <div class="card text-center bg-success text-white rounded">
+                    <div class="card-body">
+                        <i class="mdi mdi-file-document-box font-30 text-white" style="font-size: 30px;"></i>
+                        <h2 class="mt-2">{{ total_quizzes }}</h2>
+                        <h3 class="text-white">Total Quizzes</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions -->
+            <div class="col-md-3">
+                <div class="card text-center bg-warning text-white rounded">
+                    <div class="card-body">
+                        <i class="mdi mdi-comment-question-outline font-30 text-white" style="font-size: 30px;"></i>
+                        <h2 class="mt-2">{{ total_questions }}</h2>
+                        <h3 class="text-white">Total Questions</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attempts -->
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body bg-danger text-white rounded">
+                        <i class="mdi mdi-timer font-30 text-white" style="font-size: 30px;"></i>
+                        <h2 class="mt-2">{{ total_attempts }}</h2>
+                        <h3 class="text-white">Total Attempts</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================== SECOND ROW ================== -->
+        <div class="row">
+
+            <!-- Average Score -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body bg-primary">
+                        <i class="mdi mdi-chart-line font-30 text-white" style="font-size: 30px;"></i>
+                        <h2 class="mt-2 text-white">{{ avg_score }}%</h2>
+                        <h3 class="text-white">Average Score</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="col-md-8">
+                <div class="card p-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Quick Actions</h3>
+
+                        <a href="/admin/categories" class="btn btn-primary m-1">
+                            Manage Categories
+                        </a>
+
+                        <a href="/admin/quizzes" class="btn btn-success m-1">
+                            Manage Quizzes
+                        </a>
+
+                        <a href="/admin/results" class="btn btn-warning m-1">
+                            View Results
+                        </a>
+
+                        <a href="/admin/reports" class="btn btn-info m-1">
+                            Reports
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================== RECENT ATTEMPTS ================== -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Recent Quiz Attempts</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-success">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Quiz</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attempt in recent_attempts %}
+                            <tr>
+                                <td>{{ attempt.name }}</td>
+                                <td>{{ attempt.title }}</td>
+                                <td>
+                                    <span class="badge badge-success">
+                                        {{ attempt.score }}
+                                    </span>
+                                </td>
+                                <td>{{ attempt.attempted_on }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    No recent attempts
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        Online Quiz System - Admin Panel
+    </footer>
+
+</div>
+
+{% include "admin/footer.html" %}

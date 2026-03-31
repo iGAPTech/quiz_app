@@ -1,0 +1,40 @@
+{% include "admin/header.html" %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card text-center bg-info text-white">
+                    <div class="card-body text-white">
+                        <h3>{{ total_students }}</h3>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center bg-secondary text-white">
+                    <div class="card-body text-white">
+                        <h3>{{ total_quizzes }}</h3>
+                        <p>Total Quizzes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-center bg-danger text-white">
+                    <div class="card-body text-white">
+                        <h3>{{ total_attempts }}</h3>
+                        <p>Total Attempts</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% include "admin/footer.html" %}

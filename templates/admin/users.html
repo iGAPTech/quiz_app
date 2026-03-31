@@ -1,0 +1,131 @@
+{% include "admin/header.html" %}
+
+<div class="page-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h4 class="card-title">Users List</h4>
+                    </div>
+                    <div class="col-lg-4 float-end">
+                        <button class="btn btn-primary mb-3 float-right" data-toggle="modal" data-target="#addUserModal">
+                            + Add User
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-dark">
+                        
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.role }}</td>
+                                <td>
+                                    {% if user.id != 1 %}
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-sm btn-warning"
+                                                data-toggle="modal"
+                                                data-target="#editModal{{ user.id }}">
+                                            Edit
+                                        </button>
+
+                                        <!-- Delete -->
+                                        <a href="/admin/users/delete/{{ user.id }}"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Delete this user?')">
+                                        Delete
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Add User Modal -->
+<div class="modal fade" id="addUserModal">
+  <div class="modal-dialog">
+    <form method="post" action="/admin/users/add">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Add User</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <input type="text" name="name" class="form-control mb-2" placeholder="Name" required>
+            <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
+            <input type="password" name="password" class="form-control mb-2" placeholder="Password" required>
+
+            <select name="role" class="form-control">
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% for u in users %}
+<div class="modal fade" id="editModal{{ u.id }}">
+  <div class="modal-dialog">
+    <form method="post" action="/admin/users/update/{{ u.id }}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Edit User</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <input type="text" name="name" class="form-control mb-2" value="{{ u.name }}" required>
+            <input type="email" name="email" class="form-control mb-2" value="{{ u.email }}" required>
+            <input type="text" name="password" class="form-control mb-2" value="{{ u.password }}" required>
+
+            <select name="role" class="form-control">
+                <option value="student" {% if u.role=='student' %}selected{% endif %}>Student</option>
+                <option value="admin" {% if u.role=='admin' %}selected{% endif %}>Admin</option>
+            </select>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endfor %}
+
+
+
+    </div>
+
+</div>
+
+{% include "admin/footer.html" %}

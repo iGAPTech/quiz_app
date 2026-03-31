@@ -1,0 +1,45 @@
+{% include "admin/header.html" %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">
+                    Leaderboard - {{ quiz.title }}
+                </h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-dark">
+
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>Rank</th>
+                                <th>Student Name</th>
+                                <th>Score</th>
+                                <th>Total Questions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for row in leaderboard %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ row.name }}</td>
+                                <td>{{ row.highest_score }}</td>
+                                <td>{{ row.total_questions }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include "admin/footer.html" %}

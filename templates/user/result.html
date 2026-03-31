@@ -1,0 +1,20 @@
+{% include "user/header.html" %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card text-center">
+            <div class="card-body">
+                <h2>Your Score</h2>
+                <h3>{{ score }} / {{ total }}</h3>
+
+                <a href="/user/quizzes" class="btn btn-primary mt-3">
+                    Back to Quizzes
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include "user/footer.html" %}

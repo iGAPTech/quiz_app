@@ -1,0 +1,212 @@
+{% include "admin/header.html" %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h4 class="card-title">Quizzes</h4>
+                    </div>
+                    <div class="col-lg-4 text-right">
+                        <button class="btn btn-primary mb-3"
+                                data-toggle="modal"
+                                data-target="#addQuizModal">
+                            + Add Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-dark">
+
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>ID</th>
+                                <th>Category</th>
+                                <th>Title</th>
+                                <th>Time (min)</th>
+                                <th>Total Marks</th>
+                                <th>Questions</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for q in quizzes %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ q.category_name }}</td>
+                                <td>{{ q.title }}</td>
+                                <td>{{ q.time_limit }}</td>
+                                <td>{{ q.total_marks }}</td>
+                                <td>
+                                    <a href="/admin/questions/{{ q.id }}" class="btn btn-sm btn-info">
+                                        Questions
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/admin/leaderboard/{{ q.id }}" class="btn btn-sm btn-info">
+                                        Leaderboard
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if q.status == 'active' %}
+                                        <span class="badge badge-success">Active</span>
+                                    {% else %}
+                                        <span class="badge badge-secondary">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning"
+                                            data-toggle="modal"
+                                            data-target="#editModal{{ q.id }}">
+                                        Edit
+                                    </button>
+
+                                    <a href="/admin/quizzes/delete/{{ q.id }}"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Delete this quiz?')">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ================= ADD QUIZ MODAL ================= -->
+<div class="modal fade" id="addQuizModal">
+    <div class="modal-dialog">
+        <form method="post" action="/admin/quizzes/add">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5>Add Quiz</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- Category -->
+                    <select name="category_id" class="form-control mb-2" required>
+                        <option value="">Select Category</option>
+                        {% for c in categories %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="text"
+                           name="title"
+                           class="form-control mb-2"
+                           placeholder="Quiz Title"
+                           required>
+
+                    <input type="number"
+                           name="time_limit"
+                           class="form-control mb-2"
+                           placeholder="Time Limit (minutes)"
+                           required>
+
+                    <input type="number"
+                           name="total_marks"
+                           class="form-control mb-2"
+                           placeholder="Total Marks"
+                           required>
+
+                    <select name="status" class="form-control">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-success">Save</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- ================= EDIT QUIZ MODALS ================= -->
+{% for q in quizzes %}
+<div class="modal fade" id="editModal{{ q.id }}">
+    <div class="modal-dialog">
+        <form method="post" action="/admin/quizzes/update/{{ q.id }}">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5>Edit Quiz</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+
+                    <select name="category_id" class="form-control mb-2" required>
+                        {% for c in categories %}
+                        <option value="{{ c.id }}"
+                            {% if c.id == q.category_id %}selected{% endif %}>
+                            {{ c.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="text"
+                           name="title"
+                           class="form-control mb-2"
+                           value="{{ q.title }}"
+                           required>
+
+                    <input type="number"
+                           name="time_limit"
+                           class="form-control mb-2"
+                           value="{{ q.time_limit }}"
+                           required>
+
+                    <input type="number"
+                           name="total_marks"
+                           class="form-control mb-2"
+                           value="{{ q.total_marks }}"
+                           required>
+
+                    <select name="status" class="form-control">
+                        <option value="active"
+                            {% if q.status == 'active' %}selected{% endif %}>
+                            Active
+                        </option>
+                        <option value="inactive"
+                            {% if q.status == 'inactive' %}selected{% endif %}>
+                            Inactive
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Update</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endfor %}
+
+{% include "admin/footer.html" %}

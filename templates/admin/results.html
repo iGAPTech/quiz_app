@@ -1,0 +1,37 @@
+{% include "admin/header.html" %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Quiz Results & Rankings</h4>
+
+                <table class="table table-bordered table-striped text-dark">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th>Quiz</th>
+                            <th>Student</th>
+                            <th>Highest Score</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for r in results %}
+                        <tr>
+                            <td>{{ r.title }}</td>
+                            <td>{{ r.name }}</td>
+                            <td>{{ r.highest_score }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include "admin/footer.html" %}
